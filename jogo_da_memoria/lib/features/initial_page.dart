@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_da_memoria/features/components/elevated_button_component.dart';
+import 'package:jogo_da_memoria/components/elevated_button_component.dart';
 import 'package:jogo_da_memoria/features/home_game_grid/home_game_grid_page.dart';
+import 'package:jogo_da_memoria/features/select_letter_alphabet/select_letter_alphabet_page.dart';
 
 class InitialPage extends StatelessWidget {
   const InitialPage({super.key});
@@ -28,7 +29,7 @@ class InitialPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButtonComponet(
-                      text: 'Facil', page: HomeGameGridPage()),
+                      text: 'Fácil', page: SelectLetterPage()),
                   ElevatedButtonComponet(
                       text: 'Médio', page: HomeGameGridPage()),
                   ElevatedButtonComponet(

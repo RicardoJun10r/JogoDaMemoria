@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_da_memoria/features/components/card_image/card_image_componet.dart';
+import 'package:jogo_da_memoria/components/card_image/card_image_componet.dart';
 
 class HomeGameGridPage extends StatefulWidget {
   const HomeGameGridPage({super.key});
