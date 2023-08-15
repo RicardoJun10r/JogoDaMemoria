@@ -1,8 +1,15 @@
+import 'dart:async';
+
 import 'package:flip_card/flip_card.dart';
+import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 
 class CardImageComponet extends StatefulWidget {
-  const CardImageComponet({super.key});
+  final String imagem;
+  late FlipCardController flipCardController;
+
+  CardImageComponet(
+      {super.key, required this.imagem, required this.flipCardController});
 
   @override
   State<CardImageComponet> createState() => _CardImageComponetState();
@@ -13,20 +20,25 @@ class _CardImageComponetState extends State<CardImageComponet> {
   Widget build(BuildContext context) {
     return Center(
       child: FlipCard(
+        controller: widget.flipCardController,
+        onFlip: () {
+          String nome = widget.imagem;
+          debugPrint("Eu sou $nome");
+        },
         direction: FlipDirection.HORIZONTAL,
         front: Container(
-          width: 300,
-          height: 400,
+          width: 500,
+          height: 500,
           color: Colors.red,
         ),
         back: Container(
-          width: 300,
-          height: 400,
+          width: 500,
+          height: 500,
           color: Colors.blue,
           child: Image.asset(
-            'assets/SpongeBob_SquarePants_character.png',
+            widget.imagem,
             height: 100,
-            width: 150,
+            width: 250,
           ),
         ),
       ),

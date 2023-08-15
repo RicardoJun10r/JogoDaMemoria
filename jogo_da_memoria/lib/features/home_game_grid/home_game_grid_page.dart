@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_da_memoria/components/card_image/card_image_componet.dart';
 
@@ -9,6 +12,42 @@ class HomeGameGridPage extends StatefulWidget {
 }
 
 class _HomeGameGridPageState extends State<HomeGameGridPage> {
+  List<String> imagens = [
+    'assets/bobEsponja.png',
+    'assets/bobEsponja.png',
+    'assets/patrickEstrela.png',
+    'assets/patrickEstrela.png',
+    'assets/srSirigueijo.png',
+    'assets/srSirigueijo.png',
+    'assets/lulaMolusco.png',
+    'assets/lulaMolusco.png',
+  ];
+
+  late FlipCardController _flipCardController;
+  bool _isFliped = false;
+
+  void _flipCard() {
+    Timer(Duration.zero, () {
+      if (mounted) {
+        _flipCardController.toggleCard();
+        setState(() {
+          _isFliped = !_isFliped;
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _flipCardController = FlipCardController();
+    imagens.shuffle();
+  }
+
+  void printIndex(int index) {
+    debugPrint("OLa = $index");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,23 +61,46 @@ class _HomeGameGridPageState extends State<HomeGameGridPage> {
         toolbarHeight: 100,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(2),
         child: Center(
           child: SizedBox(
-            height: 500,
-            width: 300,
+            height: 400,
+            width: 800,
             child: GridView.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              physics: const NeverScrollableScrollPhysics(),
-              children: const [
-                CardImageComponet(),
-                CardImageComponet(),
-                CardImageComponet(),
-                CardImageComponet(),
-              ],
-            ),
+                crossAxisCount: 5,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  ElevatedButton(
+                    onPressed: () => {_flipCard()},
+                    child: const Text("Aperte"),
+                  ),
+                  CardImageComponet(
+                      imagem: imagens[0],
+                      flipCardController: _flipCardController),
+                  CardImageComponet(
+                      imagem: imagens[1],
+                      flipCardController: _flipCardController),
+                  CardImageComponet(
+                      imagem: imagens[2],
+                      flipCardController: _flipCardController),
+                  CardImageComponet(
+                      imagem: imagens[3],
+                      flipCardController: _flipCardController),
+                  CardImageComponet(
+                      imagem: imagens[4],
+                      flipCardController: _flipCardController),
+                  CardImageComponet(
+                      imagem: imagens[5],
+                      flipCardController: _flipCardController),
+                  CardImageComponet(
+                      imagem: imagens[6],
+                      flipCardController: _flipCardController),
+                  CardImageComponet(
+                      imagem: imagens[7],
+                      flipCardController: _flipCardController),
+                ]),
           ),
         ),
       ),
