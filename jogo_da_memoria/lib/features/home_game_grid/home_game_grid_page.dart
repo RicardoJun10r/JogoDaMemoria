@@ -23,29 +23,25 @@ class _HomeGameGridPageState extends State<HomeGameGridPage> {
     'assets/lulaMolusco.png',
   ];
 
-  late FlipCardController _flipCardController;
-  bool _isFliped = false;
+  void printIndex(int index) {
+    debugPrint("OLa = $index");
+  }
 
-  void _flipCard() {
-    Timer(Duration.zero, () {
-      if (mounted) {
-        _flipCardController.toggleCard();
-        setState(() {
-          _isFliped = !_isFliped;
-        });
-      }
+  late int _count;
+
+  int setCount() {
+    setState(() {
+      _count++;
     });
+
+    return _count;
   }
 
   @override
   void initState() {
-    super.initState();
-    _flipCardController = FlipCardController();
+    _count = 0;
     imagens.shuffle();
-  }
-
-  void printIndex(int index) {
-    debugPrint("OLa = $index");
+    super.initState();
   }
 
   @override
@@ -66,41 +62,24 @@ class _HomeGameGridPageState extends State<HomeGameGridPage> {
           child: SizedBox(
             height: 400,
             width: 800,
-            child: GridView.count(
-                crossAxisCount: 5,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  ElevatedButton(
-                    onPressed: () => {_flipCard()},
-                    child: const Text("Aperte"),
-                  ),
-                  CardImageComponet(
-                      imagem: imagens[0],
-                      flipCardController: _flipCardController),
-                  CardImageComponet(
-                      imagem: imagens[1],
-                      flipCardController: _flipCardController),
-                  CardImageComponet(
-                      imagem: imagens[2],
-                      flipCardController: _flipCardController),
-                  CardImageComponet(
-                      imagem: imagens[3],
-                      flipCardController: _flipCardController),
-                  CardImageComponet(
-                      imagem: imagens[4],
-                      flipCardController: _flipCardController),
-                  CardImageComponet(
-                      imagem: imagens[5],
-                      flipCardController: _flipCardController),
-                  CardImageComponet(
-                      imagem: imagens[6],
-                      flipCardController: _flipCardController),
-                  CardImageComponet(
-                      imagem: imagens[7],
-                      flipCardController: _flipCardController),
-                ]),
+            child: GridView.builder(
+              itemCount: imagens.length,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return CardImageComponet(
+                  imagem: imagens[index],
+                  find: false,
+                  setCount: () {
+                    setCount();
+                  },
+                  update: () {
+                    setState(() {});
+                  },
+                );
+              },
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4, crossAxisSpacing: 10, mainAxisSpacing: 10),
+            ),
           ),
         ),
       ),

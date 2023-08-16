@@ -1,30 +1,41 @@
-import 'dart:async';
-
 import 'package:flip_card/flip_card.dart';
-import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 
 class CardImageComponet extends StatefulWidget {
   final String imagem;
-  late FlipCardController flipCardController;
+  final bool find;
+  final Function setCount;
+  final Function update;
 
-  CardImageComponet(
-      {super.key, required this.imagem, required this.flipCardController});
+  const CardImageComponet(
+      {super.key,
+      required this.imagem,
+      required this.find,
+      required this.setCount,
+      required this.update});
 
   @override
   State<CardImageComponet> createState() => _CardImageComponetState();
 }
 
 class _CardImageComponetState extends State<CardImageComponet> {
+  bool _activeCard = true;
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: FlipCard(
-        controller: widget.flipCardController,
         onFlip: () {
+          setState(() {
+            _activeCard ? _activeCard = false : null;
+            widget.update();
+            print(widget.setCount().toString());
+          });
+
           String nome = widget.imagem;
           debugPrint("Eu sou $nome");
         },
+        flipOnTouch: _activeCard,
         direction: FlipDirection.HORIZONTAL,
         front: Container(
           width: 500,
