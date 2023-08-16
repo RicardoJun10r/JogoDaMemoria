@@ -1,50 +1,57 @@
 import 'package:flip_card/flip_card.dart';
+import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:jogo_da_memoria/features/home_game_grid/grid_controller.dart';
+import 'package:provider/provider.dart';
 
 class CardImageComponet extends StatefulWidget {
   final String imagem;
-  final bool find;
-  final Function setCount;
-  final Function update;
+  final int find;
+  final int selected;
+  final Function x;
 
-  const CardImageComponet(
-      {super.key,
-      required this.imagem,
-      required this.find,
-      required this.setCount,
-      required this.update});
+  const CardImageComponet({
+    super.key,
+    required this.imagem,
+    required this.find,
+    required this.x,
+    required this.selected,
+  });
 
   @override
   State<CardImageComponet> createState() => _CardImageComponetState();
 }
 
 class _CardImageComponetState extends State<CardImageComponet> {
-  bool _activeCard = true;
+  late FlipCardController cardKey;
+
+  @override
+  void initState() {
+    super.initState();
+    cardKey = FlipCardController();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: FlipCard(
+        controller: cardKey,
         onFlip: () {
-          setState(() {
-            _activeCard ? _activeCard = false : null;
-            widget.update();
-            print(widget.setCount().toString());
-          });
-
-          String nome = widget.imagem;
-          debugPrint("Eu sou $nome");
+          Provider.of<GridController>(context, listen: false)
+              .controller
+              .add(cardKey);
+          widget.selected == 0 ? widget.x() : null;
         },
-        flipOnTouch: _activeCard,
+        flipOnTouch: widget.find == 0 ? false : true,
         direction: FlipDirection.HORIZONTAL,
         front: Container(
-          width: 500,
-          height: 500,
+          width: 350,
+          height: 350,
           color: Colors.red,
         ),
         back: Container(
-          width: 500,
-          height: 500,
+          width: 350,
+          height: 350,
           color: Colors.blue,
           child: Image.asset(
             widget.imagem,

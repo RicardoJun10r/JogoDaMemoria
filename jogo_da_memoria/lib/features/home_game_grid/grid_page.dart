@@ -1,8 +1,7 @@
-import 'dart:async';
-
-import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:jogo_da_memoria/components/card_image/card_image_componet.dart';
+import 'package:jogo_da_memoria/features/home_game_grid/grid_controller.dart';
+import 'package:provider/provider.dart';
 
 class HomeGameGridPage extends StatefulWidget {
   const HomeGameGridPage({super.key});
@@ -12,40 +11,12 @@ class HomeGameGridPage extends StatefulWidget {
 }
 
 class _HomeGameGridPageState extends State<HomeGameGridPage> {
-  List<String> imagens = [
-    'assets/bobEsponja.png',
-    'assets/bobEsponja.png',
-    'assets/patrickEstrela.png',
-    'assets/patrickEstrela.png',
-    'assets/srSirigueijo.png',
-    'assets/srSirigueijo.png',
-    'assets/lulaMolusco.png',
-    'assets/lulaMolusco.png',
-  ];
-
-  void printIndex(int index) {
-    debugPrint("OLa = $index");
-  }
-
-  late int _count;
-
-  int setCount() {
-    setState(() {
-      _count++;
-    });
-
-    return _count;
-  }
-
-  @override
-  void initState() {
-    _count = 0;
-    imagens.shuffle();
-    super.initState();
-  }
+  late GridController gridController;
 
   @override
   Widget build(BuildContext context) {
+    gridController = context.watch<GridController>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Caracteristicas ou numero de chances'),
@@ -60,25 +31,26 @@ class _HomeGameGridPageState extends State<HomeGameGridPage> {
         padding: const EdgeInsets.all(2),
         child: Center(
           child: SizedBox(
-            height: 400,
-            width: 800,
             child: GridView.builder(
-              itemCount: imagens.length,
+              itemCount: gridController.list.length,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return CardImageComponet(
-                  imagem: imagens[index],
-                  find: false,
-                  setCount: () {
-                    setCount();
+                  imagem: gridController.list[index]['name'],
+                  find: gridController.list[index]['active'],
+                  x: () {
+                    gridController.incrementCount(
+                        gridController.list[index]['name'],
+                        gridController.list[index]['active']);
                   },
-                  update: () {
-                    setState(() {});
-                  },
+                  selected: gridController.list[index]['selected'],
                 );
               },
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4, crossAxisSpacing: 10, mainAxisSpacing: 10),
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
             ),
           ),
         ),
