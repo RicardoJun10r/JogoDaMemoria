@@ -13,7 +13,7 @@ class CardLetterInit extends StatelessWidget {
       required this.activePage,
       required this.index});
 
-  List<List<Map<String, dynamic>>> listImages = [
+  final List<List<Map<String, dynamic>>> listImages = [
     [
       {'name': 'assets/A/ABACATE.jpg', 'active': 1, 'selected': 0},
       {'name': 'assets/A/ABACAXI.jpg', 'active': 1, 'selected': 0},
@@ -62,8 +62,8 @@ class CardLetterInit extends StatelessWidget {
     return InkWell(
       onTap: () {
         gridController.startGame(listImages[index]);
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => HomeGameGridPage()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const HomeGameGridPage()));
       },
       child: AnimatedContainer(
         margin: EdgeInsets.only(top: top, bottom: 80, right: 20),

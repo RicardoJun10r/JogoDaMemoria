@@ -67,6 +67,9 @@ flutter:
   assets:
     - assets/
     - assets/A/
+    - assets/B/
+    - assets/C/
+
 
 
 

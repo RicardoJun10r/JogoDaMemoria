@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class GridController extends ChangeNotifier {
-  List<Map<String, dynamic>> _list = [];
-  List<Map<String, dynamic>> _listSelected = [];
+  final List<Map<String, dynamic>> _list = [];
+  final List<Map<String, dynamic>> _listSelected = [];
 
   List<Map<String, dynamic>> get list => _list;
 
@@ -99,7 +99,6 @@ class GridController extends ChangeNotifier {
 
   void verify() {
     if (_choice[0]['name'] == _choice[1]['name']) {
-      print('acertou');
       _score += 10;
       for (int i = 0; i < _list.length; i++) {
         if (_list[i]['name'] == _choice[0]['name']) {
