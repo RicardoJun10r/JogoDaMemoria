@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jogo_da_memoria/components/card_image/card_image_componet.dart';
 import 'package:jogo_da_memoria/features/home_game_grid/grid_controller.dart';
+import 'package:jogo_da_memoria/features/initial_page.dart';
 import 'package:provider/provider.dart';
 
 class HomeGameGridPage extends StatefulWidget {
@@ -16,45 +17,137 @@ class _HomeGameGridPageState extends State<HomeGameGridPage> {
   @override
   Widget build(BuildContext context) {
     gridController = context.watch<GridController>();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Caracteristicas ou numero de chances'),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(20),
-              bottomLeft: Radius.circular(20)),
-        ),
-        toolbarHeight: 100,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(2),
-        child: Center(
-          child: SizedBox(
-            child: GridView.builder(
-              itemCount: gridController.list.length,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                return CardImageComponet(
-                  imagem: gridController.list[index]['name'],
-                  find: gridController.list[index]['active'],
-                  x: () {
-                    gridController.incrementCount(
-                        gridController.list[index]['name'],
-                        gridController.list[index]['active']);
-                  },
-                  selected: gridController.list[index]['selected'],
-                );
-              },
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+    return gridController.win == true
+        ? winPageFunc(gridController, context)
+        : Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Row(
+                        children: [
+                          Text(
+                            '${gridController.score} ',
+                            style: const TextStyle(
+                                fontFamily: 'splurge', fontSize: 40),
+                          ),
+                          const Icon(
+                            Icons.scoreboard_sharp,
+                          ),
+                        ],
+                      ))
+                ],
+              ),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(20),
+                    bottomLeft: Radius.circular(20)),
+              ),
+              toolbarHeight: 100,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Center(
+                child: SizedBox(
+                  child: GridView.builder(
+                    itemCount: gridController.list.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return CardImageComponet(
+                        imagem: gridController.list[index]['name'],
+                        find: gridController.list[index]['active'],
+                        selected: gridController.list[index]['selected'],
+                      );
+                    },
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+          );
+  }
+}
+
+Widget winPageFunc(GridController controller, BuildContext context) {
+  return Scaffold(
+    body: Container(
+      color: Colors.blue[500],
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Você Venceu',
+              style: TextStyle(
+                  fontFamily: 'splurge', fontSize: 50, color: Colors.white),
+            ),
+            Text(
+              'com: ${controller.score} pontos',
+              style: const TextStyle(
+                  fontFamily: 'splurge', fontSize: 50, color: Colors.white),
+            ),
+            const SizedBox(
+              height: 150,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                height: 60,
+                width: 190,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'Jogar Novamente',
+                    style: TextStyle(fontFamily: 'splurge', fontSize: 18),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                height: 60,
+                width: 190,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const InitialPage(),
+                    ));
+                  },
+                  child: const Text(
+                    'Mudar Nível',
+                    style: TextStyle(fontFamily: 'splurge', fontSize: 18),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }

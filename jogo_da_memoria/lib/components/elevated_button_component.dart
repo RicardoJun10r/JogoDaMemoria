@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jogo_da_memoria/features/home_game_grid/grid_controller.dart';
+import 'package:provider/provider.dart';
 
 class ElevatedButtonComponet extends StatelessWidget {
   final double? width;
@@ -19,6 +21,7 @@ class ElevatedButtonComponet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gridController = context.watch<GridController>();
     return SizedBox(
       height: height,
       width: width,
@@ -31,6 +34,7 @@ class ElevatedButtonComponet extends StatelessWidget {
           ),
         ),
         onPressed: () {
+          gridController.selectedlevel(level!);
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => page));
         },

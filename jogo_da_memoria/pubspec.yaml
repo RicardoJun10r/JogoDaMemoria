@@ -66,6 +66,10 @@ flutter:
         - asset: 'fonts/splurge.ttf'
   assets:
     - assets/
+    - assets/A/
+
+
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

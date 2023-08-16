@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:jogo_da_memoria/components/card_image/card_letter_init.dart';
-import 'package:jogo_da_memoria/features/home_game_grid/grid_controller.dart';
-import 'package:jogo_da_memoria/features/home_game_grid/grid_page.dart';
-import 'package:provider/provider.dart';
 
 class SelectLetterPage extends StatefulWidget {
   const SelectLetterPage({super.key});
@@ -63,28 +60,21 @@ class _SelectLetterPageState extends State<SelectLetterPage> {
       appBar: AppBar(
         title: const Text('Selecione a letra'),
       ),
-      body: InkWell(
-        onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => HomeGameGridPage(),
-          ));
-        },
-        child: Ink(
-          child: Container(
-            color: Colors.blue[500],
-            child: Center(
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: listLetter.length,
-                itemBuilder: (BuildContext context, int index) {
-                  bool activePage = index == currentPage;
-                  return Stack(children: [
-                    CardLetterInit(
-                        letter: listLetter[index], activePage: activePage),
-                  ]);
-                },
-              ),
-            ),
+      body: Container(
+        color: const Color.fromARGB(255, 231, 231, 231),
+        child: Center(
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: listLetter.length,
+            itemBuilder: (BuildContext context, int index) {
+              bool activePage = index == currentPage;
+              return Stack(children: [
+                CardLetterInit(
+                    letter: listLetter[index],
+                    activePage: activePage,
+                    index: index),
+              ]);
+            },
           ),
         ),
       ),

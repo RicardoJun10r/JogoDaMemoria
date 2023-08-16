@@ -28,11 +28,11 @@ class InitialPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButtonComponet(
-                      text: 'Fácil', page: SelectLetterPage()),
+                      text: 'Fácil', page: SelectLetterPage(), level: 1),
                   ElevatedButtonComponet(
-                      text: 'Médio', page: SelectLetterPage()),
+                      text: 'Médio', page: SelectLetterPage(), level: 2),
                   ElevatedButtonComponet(
-                      text: 'Difícil', page: SelectLetterPage()),
+                      text: 'Difícil', page: SelectLetterPage(), level: 3),
                 ],
               ),
             ),
