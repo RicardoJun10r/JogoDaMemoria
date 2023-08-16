@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_da_memoria/components/card_image/card_letter_init.dart';
+import 'package:jogo_da_memoria/components/card_letter/card_letter_init.dart';
 
 class SelectLetterPage extends StatefulWidget {
   const SelectLetterPage({super.key});
@@ -58,7 +58,12 @@ class _SelectLetterPageState extends State<SelectLetterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Selecione a letra'),
+        centerTitle: true,
+        toolbarHeight: 100,
+        title: const Text(
+          'ESCOLHA A LETRA',
+          style: TextStyle(fontFamily: 'splurge', fontSize: 30),
+        ),
       ),
       body: Container(
         color: const Color.fromARGB(255, 231, 231, 231),

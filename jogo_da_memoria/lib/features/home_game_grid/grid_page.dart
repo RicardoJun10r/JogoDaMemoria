@@ -32,10 +32,12 @@ class _HomeGameGridPageState extends State<HomeGameGridPage> {
                           Text(
                             '${gridController.score} ',
                             style: const TextStyle(
-                                fontFamily: 'splurge', fontSize: 40),
+                                fontFamily: 'splurge', fontSize: 50),
                           ),
                           const Icon(
-                            Icons.scoreboard_sharp,
+                            Icons.star,
+                            size: 40,
+                            color: Colors.yellow,
                           ),
                         ],
                       ))
@@ -84,13 +86,37 @@ Widget winPageFunc(GridController controller, BuildContext context) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 50),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  3, // Substitua pelo número desejado de ícones
+                  (index) => index == 1
+                      ? const Icon(
+                          Icons.star,
+                          size: 60,
+                          color: Colors.yellow,
+                          weight: 100,
+                        )
+                      : const Padding(
+                          padding: EdgeInsets.only(top: 20),
+                          child: Icon(
+                            Icons.star,
+                            size: 40,
+                            color: Colors.yellow,
+                          ),
+                        ),
+                ),
+              ),
+            ),
             const Text(
               'Você Venceu',
               style: TextStyle(
                   fontFamily: 'splurge', fontSize: 50, color: Colors.white),
             ),
             Text(
-              'com: ${controller.score} pontos',
+              'com ${controller.score} pontos',
               style: const TextStyle(
                   fontFamily: 'splurge', fontSize: 50, color: Colors.white),
             ),
@@ -101,7 +127,7 @@ Widget winPageFunc(GridController controller, BuildContext context) {
               padding: const EdgeInsets.all(10),
               child: SizedBox(
                 height: 60,
-                width: 190,
+                width: 200,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     shape: MaterialStatePropertyAll(
@@ -114,8 +140,11 @@ Widget winPageFunc(GridController controller, BuildContext context) {
                     Navigator.of(context).pop();
                   },
                   child: const Text(
-                    'Jogar Novamente',
-                    style: TextStyle(fontFamily: 'splurge', fontSize: 18),
+                    'JOGAR NOVAMENTE',
+                    style: TextStyle(
+                      fontFamily: 'splurge',
+                      fontSize: 19,
+                    ),
                   ),
                 ),
               ),
@@ -124,7 +153,7 @@ Widget winPageFunc(GridController controller, BuildContext context) {
               padding: const EdgeInsets.all(10),
               child: SizedBox(
                 height: 60,
-                width: 190,
+                width: 200,
                 child: ElevatedButton(
                   style: ButtonStyle(
                     shape: MaterialStatePropertyAll(
@@ -139,8 +168,8 @@ Widget winPageFunc(GridController controller, BuildContext context) {
                     ));
                   },
                   child: const Text(
-                    'Mudar Nível',
-                    style: TextStyle(fontFamily: 'splurge', fontSize: 18),
+                    'MUDAR NÍVEL',
+                    style: TextStyle(fontFamily: 'splurge', fontSize: 20),
                   ),
                 ),
               ),
